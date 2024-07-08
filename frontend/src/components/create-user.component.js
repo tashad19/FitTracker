@@ -25,7 +25,7 @@ export default class CreateUser extends Component {
 
     console.log(user);
 
-    axios.post("http://localhost:4000/users/add", user)
+    axios.post("https://fittracker-1k9g.onrender.com/users/add", user)
       .then(res => console.log(res.data))
       .catch(err => console.log("Error: " + err));
 

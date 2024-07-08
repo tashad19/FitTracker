@@ -25,7 +25,7 @@ export default class ExercisesList extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:4000/exercises/")
+      .get("https://fittracker-1k9g.onrender.com/exercises/")
       .then((res) => {
         this.setState({ exercises: res.data });
       })
@@ -36,7 +36,7 @@ export default class ExercisesList extends Component {
 
   deleteExercise = (id) => {
     axios
-      .delete("http://localhost:4000/exercises/" + id)
+      .delete("https://fittracker-1k9g.onrender.com/exercises/" + id)
       .then((res) => console.log(res.data))
       .catch((err) => console.log("Error: " + err));
 
