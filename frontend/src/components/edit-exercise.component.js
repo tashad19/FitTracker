@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"
+import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
 
 export default class EditExercises extends Component {
   constructor(props) {
@@ -14,32 +13,33 @@ export default class EditExercises extends Component {
       duration: 0,
       date: new Date(),
       users: [],
+      successMessage: ""
     };
   }
 
   componentDidMount = () => {
     const arr = window.location.href.split("/");
-    axios.get("http://localhost:4000/exercises/"+arr[arr.length-1])
+    axios.get("http://localhost:4000/exercises/" + arr[arr.length - 1])
       .then(res => {
         this.setState({
           username: res.data.username,
           description: res.data.description,
           duration: res.data.duration,
           date: new Date(res.data.date)
-        })
+        });
       })
       .catch((err) => {
         console.log("Error: " + err);
-      })
+      });
 
-    axios.get("http://localhost:4000/users/")
+    axios.get("http://localhost:4000/signup/")
       .then(res => {
-        if(res.data.length > 0){
+        if (res.data.length > 0) {
           this.setState({
             users: res.data.map(user => user.username),
-          })
+          });
         }
-      })
+      });
   };
 
   onChangeUsername = (e) => {
@@ -76,11 +76,22 @@ export default class EditExercises extends Component {
 
     console.log(exercise);
 
-    axios.post("http://localhost:4000/exercises/update/"+arr[arr.length-1], exercise)
-      .then(res => console.log(res.data))
-      .catch(err => console.log("Error: " + err)); 
+    axios.post("http://localhost:4000/exercises/update/" + arr[arr.length - 1], exercise)
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          successMessage: "Exercise Log updated successfully"
+        });
+      })
+      .catch(err => console.log("Error: " + err));
 
-    window.location = "/"; // take back to home page after submitting
+    // Clear the form
+    this.setState({
+      username: "",
+      description: "",
+      duration: 0,
+      date: new Date(),
+    });
   };
 
   render() {
@@ -140,8 +151,12 @@ export default class EditExercises extends Component {
             />
           </div>
         </form>
+        {this.state.successMessage && (
+          <div className="mt-3">
+            <p className="text-success">{this.state.successMessage}</p>
+          </div>
+        )}
       </div>
     );
   }
 }
-

@@ -12,15 +12,15 @@ import CreateExercise from "./components/create-exercise.component";
 import SignUp from "./components/signup.component";
 import Login from "./components/login.component";
 import Home from "./components/home.component";
+import { UserProvider } from "./components/user-context";
 
 export const UserContext = createContext();
 
 function App() {
-  const [user, setUser] = useState(null);
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={[user, setUser]} >
+      <UserProvider>
         <div className="container">
           <Navbar />
           <Routes>
@@ -32,7 +32,7 @@ function App() {
             <Route path="/login" exact Component={Login} />
           </Routes>
         </div>
-      </UserContext.Provider>
+        </UserProvider>
     </BrowserRouter>
   );
 }

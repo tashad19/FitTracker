@@ -1,14 +1,17 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import axios from "axios";
-import { UserContext } from "../App";
+import { UserContext } from "./user-context";
 
 export default class Login extends Component {
+  static contextType = UserContext;
+
   constructor(props) {
     super(props);
 
     this.state = {
       email: "",
       password: "",
+      isLoggedIn: false,
     };
   }
 
@@ -38,10 +41,14 @@ export default class Login extends Component {
       .post("http://localhost:4000/login/", user)
       .then((res) => {
         console.log(res);
-        if (res.data === "Success") {
-          setUser(res.data); // Update the context with the logged-in user's data
+        if (res.data !== "incorrect" && res.data !== "no record existed") {
+          setUser(res.data.username); // Update the context with the logged-in user's data
 
-          window.location = "/exercises";
+          this.setState({
+            isLoggedIn: true,
+          })
+
+          // this.props.history.push("/"); // Navigate to the home page without reloading
         } else {
           alert("Invalid Credentials");
           this.setState({
@@ -59,44 +66,45 @@ export default class Login extends Component {
   };
 
   render() {
+    const { user, setUser } = this.context;
+
     return (
       <div>
-        <UserContext.Consumer>
-          {([user, setUser]) => (
-            <div>
-              <h3>Login</h3>
-              <form onSubmit={(e) => this.onSubmit(e, setUser)}>
-                <div className="form-group">
-                  <label>Email: </label>
-                  <input
-                    type="email"
-                    required
-                    className="form-control"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Password: </label>
-                  <input
-                    type="password"
-                    required
-                    className="form-control"
-                    value={this.state.password}
-                    onChange={this.onChangePassword}
-                  />
-                </div>
-                <div className="form-group">
-                  <input
-                    type="submit"
-                    value="Login"
-                    className="btn btn-primary"
-                  />
-                </div>
-              </form>
+        <div>
+          <h3>Login</h3>
+          <form onSubmit={(e) => this.onSubmit(e, setUser)}>
+            <div className="form-group">
+              <label>Email: </label>
+              <input
+                type="email"
+                required
+                className="form-control"
+                value={this.state.email}
+                onChange={this.onChangeEmail}
+                disabled={this.state.isLoggedIn}
+              />
             </div>
-          )}
-        </UserContext.Consumer>
+            <div className="form-group">
+              <label>Password: </label>
+              <input
+                type="password"
+                required
+                className="form-control"
+                value={this.state.password}
+                onChange={this.onChangePassword}
+                disabled={this.state.isLoggedIn}
+              />
+            </div>
+            <div className="form-group">
+              <input type="submit" value="Login" className="btn btn-primary" disabled={this.stateisLoggedIn} />
+            </div>
+          </form>
+          {this.state.isLoggedIn && (
+          <div style={{ color: "green", marginTop: "10px" }}>
+            Successfully logged in
+          </div>
+        )}
+        </div>
       </div>
     );
   }
