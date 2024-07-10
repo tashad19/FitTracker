@@ -18,7 +18,7 @@ export default class CreateExercises extends Component {
 
   // component life cycle method
   componentDidMount = () => {
-    axios.get("https://fittracker-1k9g.onrender.com/users/")
+    axios.get("http://localhost:4000/signup/")
       .then(res => {
         if(res.data.length > 0){
           this.setState({
@@ -62,11 +62,11 @@ export default class CreateExercises extends Component {
 
     console.log(exercise);
 
-    axios.post("https://fittracker-1k9g.onrender.com/exercises/add", exercise)
+    axios.post("http://localhost:4000/exercises/add", exercise)
       .then(res => console.log(res.data))
       .catch(err => console.log("Error: " + err)); 
 
-    window.location = "/"; // take back to home page after submitting
+    window.location = "/exercises"; // take back to home page after submitting
   };
 
   render() {
@@ -110,7 +110,7 @@ export default class CreateExercises extends Component {
               onChange={this.onChangeDuration}
             />
           </div>
-          <div className="form-group">
+          <div className="form-group my-3">
             <label>Date: </label>
             <DatePicker
               selected={this.state.date}

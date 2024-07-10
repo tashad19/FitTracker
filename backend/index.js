@@ -3,7 +3,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 
 const exercisesRouter = require("./routes/exercises");
-const usersRouter = require("./routes/users");
+const signupRouter = require("./routes/signup");
+const loginRouter = require("./routes/login");
 
 require("dotenv").config();
 
@@ -22,7 +23,8 @@ connection.once('open', () => {
 })
 
 app.use("/exercises", exercisesRouter);
-app.use("/users", usersRouter);
+app.use("/signup", signupRouter);
+app.use("/login", loginRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

@@ -4,7 +4,6 @@ import axios from "axios";
 
 const Exercise = (props) => (
   <tr>
-    <td>{props.exercise.username}</td>
     <td>{props.exercise.description}</td>
     <td>{props.exercise.duration}</td>
     <td>{props.exercise.date.substring(0,10)}</td>
@@ -15,6 +14,8 @@ const Exercise = (props) => (
 )
 
 export default class ExercisesList extends Component {
+  // static contextType = UserContext;
+
   constructor(props) {
     super(props);
 
@@ -25,7 +26,7 @@ export default class ExercisesList extends Component {
 
   componentDidMount() {
     axios
-      .get("https://fittracker-1k9g.onrender.com/exercises/")
+      .get("http://localhost:4000/exercises/")
       .then((res) => {
         this.setState({ exercises: res.data });
       })
@@ -36,7 +37,7 @@ export default class ExercisesList extends Component {
 
   deleteExercise = (id) => {
     axios
-      .delete("https://fittracker-1k9g.onrender.com/exercises/" + id)
+      .delete("http://localhost:4000/exercises/" + id)
       .then((res) => console.log(res.data))
       .catch((err) => console.log("Error: " + err));
 
@@ -58,7 +59,7 @@ export default class ExercisesList extends Component {
         <table className="table">
           <thead className="thead-light">
             <tr>
-              <th>Username</th>
+              {/* <th>Username</th> */}
               <th>Description</th>
               <th>Duration</th>
               <th>Date</th>

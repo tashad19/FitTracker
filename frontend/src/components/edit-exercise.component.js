@@ -19,7 +19,7 @@ export default class EditExercises extends Component {
 
   componentDidMount = () => {
     const arr = window.location.href.split("/");
-    axios.get("https://fittracker-1k9g.onrender.com/exercises/"+arr[arr.length-1])
+    axios.get("http://localhost:4000/exercises/"+arr[arr.length-1])
       .then(res => {
         this.setState({
           username: res.data.username,
@@ -32,7 +32,7 @@ export default class EditExercises extends Component {
         console.log("Error: " + err);
       })
 
-    axios.get("https://fittracker-1k9g.onrender.com/users/")
+    axios.get("http://localhost:4000/users/")
       .then(res => {
         if(res.data.length > 0){
           this.setState({
@@ -76,7 +76,7 @@ export default class EditExercises extends Component {
 
     console.log(exercise);
 
-    axios.post("https://fittracker-1k9g.onrender.com/exercises/update/"+arr[arr.length-1], exercise)
+    axios.post("http://localhost:4000/exercises/update/"+arr[arr.length-1], exercise)
       .then(res => console.log(res.data))
       .catch(err => console.log("Error: " + err)); 
 
