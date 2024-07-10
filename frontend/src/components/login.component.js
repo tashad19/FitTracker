@@ -38,7 +38,7 @@ export default class Login extends Component {
     console.log(user);
 
     axios
-      .post("http://localhost:4000/login/", user)
+      .post("https://fittracker-1k9g.onrender.com/login/", user)
       .then((res) => {
         console.log(res);
         if (res.data !== "incorrect" && res.data !== "no record existed") {

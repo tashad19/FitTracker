@@ -12,7 +12,7 @@ export default class Home extends Component {
         <h1 className="m-5">FitTracker</h1>
         <h3 className="m-5">Your personalized fitness tracker.</h3>
   
-        {user ? <h2>Hello, {user}!</h2> : <h2>Please log in.</h2>}
+        {user ? <h2 className="text-secondary">Hello, {user}!</h2> : <h2 className="text-secondary">Please log in.</h2>}
       </div>
     );
   }

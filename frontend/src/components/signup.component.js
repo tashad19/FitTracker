@@ -41,7 +41,7 @@ export default class SignUp extends Component {
 
     console.log(user);
 
-    axios.post("http://localhost:4000/signup/add", user)
+    axios.post("https://fittracker-1k9g.onrender.com/signup/add", user)
       .then(res => console.log(res.data))
       .catch(err => console.log("Error: " + err));
 
